@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
+	<link rel='stylesheet/less' href='css/pagestyle.less'/>
+	<link rel='stylesheet/less' href='css/graphs.less'/>
+	<link rel='stylesheet/less' href='css/mapstyles.less'/>
+	<link rel='stylesheet/less' href='css/datepicker.less'/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="js/less.js"></script>
+</head>
+<body>
+	<!-- <input type="text" id="text">
+	<button class="submit">Submit</button> -->
+	<div class="application-wrapper">
+		<div class="sidebar">
+			<div class="sidebar-logo">Shadows in the Rain</div>
+			<div class="sidebar-section">
+				<div class="icon-holder ocean"></div>
+				<div class="sidebar-title">Select Ocean</div>
+				<div class="arrow-holder"></div>
+				<!-- Slide Out for Oceans -->
+				<div class="slideOut">
+					<div class="item-holder">
+						<input type="checkbox" id="atlantic" checked>
+						<label for="atlantic">Atlantic</label>
+					</div>
+					<div class="item-holder">
+						<input type="checkbox" id="nepacific" checked>
+						<label for="nepacific">North East Pacific</label>
+					</div>
+					<div class="item-holder">
+						<input type="checkbox" id="ncpacific" checked>
+						<label for="ncpacific">North Central Pacific</label>
+					</div>
+				</div>
+				<!-- Slide Out Ends -->
+			</div>
+			<div class="sidebar-section">
+				<div class="icon-holder view"></div>
+				<div class="sidebar-title">Show Options</div>
+				<div class="arrow-holder"></div>
+				<!-- Slide Out for Options -->
+				<div class="slideOut">
+					<div class="item-holder">
+						<input name="show" type="radio" id="showall">
+						<label for="showall">Show all</label>
+					</div>
+					<div class="item-holder">
+						<input name="show" type="radio" id="showparticular">
+						<label for="showparticular">Show particular</label>
+						<div class="sub-item-holder first">
+							<input name="showpart" type="radio" id="top5">
+							<label for="top5">Top 5 overall</label>
+						</div>
+						<div class="sub-item-holder">
+							<input name="showpart" type="radio" id="top10">
+							<label for="top10">Top 10 overall</label>
+						</div>
+						<div class="sub-item-holder">
+							<input name="showpart" type="radio" id="ourtop5">
+							<label for="ourtop5">Our top 5 picks</label>
+						</div>
+						<div class="sub-item-holder">
+							<input name="showpart" type="radio" id="individual">
+							<label for="individual">Choose individual</label>
+						</div>
+					</div>
+				</div>
+				<!-- Slide Out Ends -->
+			</div>
+			<div class="sidebar-section hurricanes">
+				<div class="hurricanes-list">
+					<div class="list-header">Hurricanes List</div>
+					<ul class="list">
+						<li class="high">
+							<div class="hurricane-icon"></div>
+							Hurricane 1
+						</li>
+						<li class="high">
+							<div class="hurricane-icon"></div>
+							Hurricane 2
+						</li>
+						<li class="high">
+							<div class="hurricane-icon"></div>
+							Hurricane 3
+						</li>
+						<li class="high">
+							<div class="hurricane-icon"></div>
+							Hurricane 4
+						</li>
+						<li class="medium">
+							<div class="hurricane-icon"></div>
+							Hurricane 5
+						</li>
+						<li class="medium">
+							<div class="hurricane-icon"></div>
+							Hurricane 6
+						</li>
+						<li class="low">
+							<div class="hurricane-icon"></div>
+							Hurricane 7
+						</li>
+						<li class="low">
+							<div class="hurricane-icon"></div>
+							Hurricane 8
+						</li>
+						<li class="low">
+							<div class="hurricane-icon"></div>
+							Hurricane 9
+						</li>
+						<li class="none">
+							<div class="hurricane-icon"></div>
+							Hurricane 10
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="sidebar-section">
+				<div class="icon-holder order"></div>
+				<div class="sidebar-title">Order By</div>
+				<div class="arrow-holder"></div>
+				<!-- Slide Out for Order -->
+				<div class="slideOut">
+					<div class="item-holder">
+						<input name="order" type="radio" id="alphabetical" checked>
+						<label for="alphabetical">Alphabetical</label>
+					</div>
+					<div class="item-holder">
+						<input name="order" type="radio" id="chronological">
+						<label for="chronological">Chronological</label>
+					</div>
+					<div class="item-holder">
+						<input name="order" type="radio" id="maxwind">
+						<label for="maxwind">Max wind speed</label>
+					</div>
+					<div class="item-holder">
+						<input name="order" type="radio" id="minpressure">
+						<label for="minpressure">Min air pressure</label>
+					</div>
+				</div>
+				<!-- Slide Out Ends -->
+			</div>
+			<div class="sidebar-section" id="filterby">
+				<div class="icon-holder filter"></div>
+				<div class="sidebar-title">Filter By</div>
+				<div class="arrow-holder"></div>
+				<!-- Slide Out for Order -->
+				<div class="slideOut" style="top:auto; bottom:-60px; ">
+					<!-- Accordion -->
+					<div id="filterAccordion">
+						<h3 class="item-holder time" id="time">Time <div class="clearfilter" id="cleartime">(clear)</div></h3>
+						<div>
+							<div class="item-holder">
+								<input name="filter-time" type="radio" id="season">
+								<label for="season">Season</label>
+								<div class="sub-item-holder first">
+									<input name="season" type="radio" id="atlanticseason" value="atlantic">
+									<label for="atlanticseason">Atlantic season</label>
+								</div>
+								<div class="sub-item-holder">
+									<input name="season" type="radio" id="pacificseason" value="pacific">
+									<label for="pacificseason">Pacific season</label>
+								</div>
+							</div>
+							<div class="item-holder">
+								<input name="filter-time" type="radio" id="particulardate">
+								<label for="particulardate">Particular date</label>
+								<div class="sub-item-holder first">
+									<div class="icon-holder ocean" id="particulardateicon"></div>
+									<input class="dateRight" for="top5" placeholder="Pick a date" id="particulardatepicker" readonly>
+								</div>
+							</div>
+							<div class="item-holder">
+								<input name="filter-time" type="radio" id="particularmonth">
+								<label for="particularmonth">Particular month</label>
+								<div class="sub-item-holder first">
+								    <select name="month" id="month">
+										<option selected="selected">Select month</option>
+										<option>January</option>
+										<option>February</option>
+										<option>March</option>
+										<option>April</option>
+										<option>May</option>
+										<option>June</option>
+										<option>July</option>
+										<option>August</option>
+										<option>September</option>
+										<option>October</option>
+										<option>November</option>
+										<option>December</option>
+								    </select>
+								</div>
+							</div>
+							<div class="item-holder last">
+								<input name="filter-time" type="radio" id="particularyear">
+								<label for="particularyear">Particular year</label>
+								<div class="sub-item-holder first">
+								    <select name="year" id="year">
+										<option selected="selected">All</option>
+										<option>Pre 2004</option>
+										<option>2004</option>
+										<option>2005</option>
+										<option>2006</option>
+										<option>2007</option>
+										<option>2008</option>
+										<option>2009</option>
+										<option>2010</option>
+										<option>2011</option>
+										<option>2012</option>
+										<option>2013</option>
+										<option>2014</option>
+								    </select>
+								</div>
+							</div>
+							<div class="item-holder">
+								<input name="filter-time" type="radio" id="selectedinterval">
+								<label for="selectedinterval">Selected interval</label>
+								<div class="sub-item-holder first">
+									<div class="icon-holder ocean"></div>
+									<input class="dateRight" for="top5" value="Pick a date" id="fromdatepicker" readonly>
+									<label class="to-spacer">to</label>
+									<div class="icon-holder lastdate"></div>
+									<input class="dateRight" for="top5" value="Pick a date" id="enddatepicker" readonly>
+								</div>
+							</div>
+						</div>
+						<h3 class="item-holder">Landfall <div class="clearfilter" id="clearlandfall">(clear)</div></h3>
+						<div>
+							<div class="item-holder">
+								<input name="landfall" type="radio" id="landfallmade">
+								<label for="landfallmade">Made landfall only</label>
+							</div>
+							<div class="item-holder">
+								<input name="landfall" type="radio" id="landfallnotmade">
+								<label for="landfallnotmade">Did not make landfall only</label>
+							</div>
+						</div>
+						<h3 class="item-holder">Wind speed <div class="clearfilter" id="clearwindspeed">(clear)</div></h3>
+						<div>
+							<div class="item-holder">
+								<div id="wind-slider"></div>
+								<div class="sliderValues left" id="windSpeedMin">Min: 0</div>
+								<div class="sliderValues right" id="windSpeedMax">Max: 165</div>
+							</div>
+						</div>
+						<h3 class="item-holder">Pressure <div class="clearfilter" id="clearpressure">(clear)</div></h3>
+						<div>
+							<div class="item-holder">
+								<div id="pressure-slider"></div>
+								<div class="sliderValues left" id="pressureMin">Min: 882</div>
+								<div class="sliderValues right" id="pressureMax">Max: 1024</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Slide Out Ends -->
+			</div>
+			<div class="sidebar-section">
+				<button class="actionbutton">UPDATE</button>
+			</div>
+		</div>
+		<div id="map"></div>
+		<div class="graphs" id="graphs">
+			<div class="graph-section">
+				<div id="graph-1">
+					<div class="y-text">Number of hurricanes</div>
+					<div class="x-text">Years</div>
+					<!-- <div class="legend">
+						<div class="color-1">Atlantic</div>
+						<div class="color-2">Pacific</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#map").css("height",$(document).height());
+	</script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/ui.js"></script>
+	<script>
+		var 
+			// margin = {top: 20, right: 0, bottom: 30, left: 70},
+			margin = {top: 20, right: 20, bottom: 30, left: 140},
+		    width = $(".graph-section").width() - margin.left - margin.right,
+		    height = 500 - margin.top - margin.bottom;
+
+		var parseDate = d3.time.format("%Y").parse;
+
+		var x = d3.time.scale()
+		    .range([0, width]);
+
+		var y = d3.scale.linear()
+		    .range([height, 0]);
+
+		var xAxis = d3.svg.axis()
+		    .scale(x)
+		    .orient("bottom");
+
+		var yAxis = d3.svg.axis()
+		    .scale(y)
+		    .orient("left");
+
+		var line1 = d3.svg.line()
+		   .x(function(d) { return x(d.year); })
+		   .y(function(d) { return y(d.noh); });
+
+		var line2 = d3.svg.line()
+		   .x(function(d) { return x(d.year); })
+		   .y(function(d) { return y(d.noh); });
+		  
+		/*var line = d3.svg.line()
+		    .interpolate("basis")
+		    .x(function(d) { return x(d.year); })
+		    .y(function(d) { return y(d.noh); });
+		*/
+		var svg = d3.select("#graph-1").append("svg")
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		d3.json("data11.php", function(error, data) {
+		    console.log(data);
+		   data.forEach(function(d) {
+		        d.noh = +d.noh;
+		        d.year = parseDate(d.year);
+		    });
+		  data1 = data.filter(function(tee){return tee.type == "P"})
+		  data = data.filter(function(tee){return tee.type == "AL"})
+		  console.log(data);
+		  x.domain(d3.extent(data, function(d) { return d.year; }));
+		  //y.domain(d3.extent(data, function(d) { return d.noh; }));
+		  y.domain([0, d3.max(data, function(d) { return d.noh; })]);
+		  svg.append("g")
+		      .attr("class", "x axis")
+		      .attr("transform", "translate(0," + height + ")")
+		      .call(xAxis);
+
+		  svg.append("g")
+		      .attr("class", "y axis")
+		      .call(yAxis)
+		    .append("text")
+		      .attr("transform", "rotate(-90)")
+		      .attr("y", 6)
+		      .attr("dy", ".71em")
+		      .style("text-anchor", "end")
+		      .style("fill", "#FFF");
+		      
+		      //.text("Number of Hurricanes")   
+
+		  svg.append("path")
+		      .datum(data)
+		      .attr("class", "line1")
+		      .attr("d", line1);
+
+		  svg.append("path")
+		      .datum(data1)
+		      .attr("class", "line2")
+		      .attr("d", line2);
+		});
+	</script>
+</body>
+</html>

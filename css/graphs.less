@@ -1,0 +1,96 @@
+.box-sized{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.left{ float: left; }
+.right{ float: right; }
+*:focus{
+	outline: none;
+}
+#graphs{
+	background-color: #2B3541;
+	width: 35%;
+	min-width: 250px;
+	color: #FFF;
+	.right;
+	text-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+	box-shadow:  -1px 1px 2px rgba(0,0,0,0.7);
+	cursor: default;
+	overflow-x: hidden;
+
+	.graph-section{
+		width: 100%;
+		.left;
+		.box-sized;
+		padding: 10px;
+	}
+}
+#graph-1{
+	position: relative;
+
+	.legend{
+		position: absolute;
+		bottom: -40px;
+		.color-1{
+			
+		}
+		.color-2{
+
+		}
+	}
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #FFF;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path, .y.axis path {
+  display: none;
+}
+.x.axis, .y.axis{
+	fill: #FFF;
+}
+.line1 {
+  fill: none;
+  stroke: #2ac0c1;
+  stroke-width: 2.5px;
+  filter: drop-shadow( 5px 5px 5px #000 );
+}
+.line2 {
+  fill: none;
+  stroke: #F6C86A;
+  stroke-width: 2.5px;
+}
+.y-text{
+	width: 250px;
+	position: absolute;
+	transform: rotate(-90deg);
+	left: -105px;
+    top: 80px;
+    font-size: 1rem;
+}
+.x-text{
+	width: 100%;
+	position: absolute;
+	left: 15px;
+    bottom: -18px;
+    text-align: center;
+}
+@media screen and (min-width: 6000px) {
+	#graphs{
+		width: 18.75%;
+		font-size: 1.8rem;
+	}
+	.x-text{
+		bottom: -4rem;
+	}
+	.y-text{
+		font-size: 1.8rem;
+		width: 500px;
+		left: -205px;
+    	top: 100px;
+	}
+}

@@ -1,0 +1,602 @@
+body{
+	font-family: 'Source Sans Pro', sans-serif;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select:none;
+	user-select:none;
+	-o-user-select:none;
+}
+/* Variable declarations */
+.box-sized{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.left{ float: left; }
+.right{ float: right; }
+*:focus{
+	outline: none;
+}
+
+.sidebar{
+	background-color: #2B3541;
+	width: 15%;
+	min-width: 250px;
+	color: #FFF;
+	.left;
+	text-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+	box-shadow: 2px -1px 2px rgba(0,0,0,0.7);
+	cursor: default;
+
+	.sidebar-logo{
+		font-size: 24px;
+		.left;
+		width: 100%;
+		text-align: center;
+		text-transform: uppercase;
+		margin: 20px 0 10px 0;
+	}
+	.sidebar-section{
+		.box-sized;
+		.left;
+		position: relative;
+		width: 100%;
+		padding: 15px;
+		-webkit-transition: all 0.2s;
+    	transition: all 0.2s;
+
+		.icon-holder{
+			width: 16px;
+			height: 16px;
+			top: 16px;
+    		left: 20px;
+			position: absolute;
+			background-color: #FFF;
+
+			&.ocean{
+				-webkit-mask:  url('../images/ocean.svg') no-repeat;
+				mask: url('../images/ocean.svg') no-repeat;
+				-webkit-mask-size: 16px 16px;
+				mask-size: 16px 16px;
+			}
+			&.view{
+				-webkit-mask:  url('../images/view.svg') no-repeat;
+				mask: url('../images/view.svg') no-repeat;
+				-webkit-mask-size: 16px 16px;
+				mask-size: 16px 16px;
+			}
+			&.order{
+				-webkit-mask:  url('../images/order.svg') no-repeat;
+				mask: url('../images/order.svg') no-repeat;
+				-webkit-mask-size: 16px 16px;
+				mask-size: 16px 16px;
+			}
+			&.filter{
+				-webkit-mask:  url('../images/filter.svg') no-repeat;
+				mask: url('../images/filter.svg') no-repeat;
+				-webkit-mask-size: 16px 16px;
+				mask-size: 16px 16px;
+			}
+		}
+		.arrow-holder{
+			width: 16px;
+			height: 16px;
+			top: 16px;
+    		right: 20px;
+			position: absolute;
+			background-color: #FFF;
+			-webkit-mask:  url('../images/arrow.svg') no-repeat;
+			mask: url('../images/arrow.svg') no-repeat;
+			-webkit-mask-size: 16px 16px;
+			mask-size: 16px 16px;
+			-webkit-transition: all 0.2s;
+    		transition: all 0.2s;
+		}
+		.sidebar-title{
+			font-size: 18px;
+			padding-left: 30px;
+			width: 100%;
+		}
+		&:hover, &.selected{
+			background-color: #1B2532;
+			.slideOut{
+				visibility: visible;
+			}
+			.arrow-holder{
+				right: 15px;
+			}
+		}
+		&.hurricanes:hover{
+			background: none;
+		}
+	}
+	.hurricanes-list{
+		.box-sized;
+		.left;
+		position: relative;
+		width: 100%;
+		padding: 15px;
+		height: 260px;
+		border-radius: 4px;
+		background-color: #FFF;
+		text-shadow: none;
+		color: #333333;
+		overflow: hidden;
+
+		.list-header{
+			font-size: 18px;
+			text-align: center;
+		}
+		.list{
+			margin-top: 10px;
+			height: 200px;
+			overflow-y: auto;
+			position: relative;
+			li{
+				font-size: 14px;
+				padding: 10px 20px;
+				border-bottom: 1px solid #f2f2f2;
+				width: 100%;
+				.left;
+				.box-sized;
+				position: relative;
+
+				.hurricane-icon{
+					width: 14px;
+					height: 14px;
+					top: 10px;
+		    		left: 0px;
+					position: absolute;
+					-webkit-mask:  url('../images/hurricane.svg') no-repeat;
+					mask: url('../images/hurricane.svg') no-repeat;
+					-webkit-mask-size: 14px 14px;
+					mask-size: 14px 14px;
+					-webkit-transition: all 0.2s;
+		    		transition: all 0.2s;
+				}
+
+				&:last-child{
+					border-bottom: 0;
+					padding-bottom: 30px;
+				}
+
+				&.high{
+					.hurricane-icon{
+	    				background-color: #e74c3c;
+	    			}
+	    		}
+	    		&.medium{
+	    			.hurricane-icon{
+	    				background-color: #e67e22;
+	    			}
+	    		}
+	    		&.low{
+	    			.hurricane-icon{
+	    				background-color: #2ecc71;
+	    			}
+	    		}
+	    		&.none{
+	    			.hurricane-icon{
+	    				background-color: #95a5a6;
+	    			}
+	    		}
+			}
+		}
+		&:after{
+			width: 100%;
+			position: absolute;
+			content: "";
+			bottom: 0;
+			left: 0;
+			height: 50px;
+			background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+		}
+    }
+    .slideOut{
+    	.box-sized;
+    	.left;
+    	width: 250px;
+    	background-color: #1B2532;
+    	padding: 18px;
+    	position: absolute;
+    	visibility: hidden;
+    	top: 0;
+    	left: 100%;
+    	border-top-right-radius: 4px;
+    	border-bottom-right-radius: 4px;
+    	-webkit-transition: all 0.2s;
+    	transition: all 0.2s;
+
+    	.item-holder{
+    		width: 216px;
+    		.left;
+    		margin-bottom: 14px;
+    		input[type="checkbox"]{
+	    		width: 14px;
+	    		height: 14px;
+	    	}
+	    	input[type="radio"]{
+	    		width: 14px;
+	    		height: 14px;
+	    	}
+	    	label{
+	    		font-size: 16px;
+	    	}
+	    	&:last-child{
+	    		margin-bottom: 0px;
+	    	}
+	    	.sub-item-holder{
+	    		width: 100%;
+    			.left;
+    			.box-sized;
+    			padding: 5px 25px;
+
+    			&.first{
+    				margin-top: 6px;
+    			}
+	    	}
+	    	&:last-child{
+	    		border-bottom: 0 !important;
+	    	}
+    	}
+    	h3{
+    		position: relative;
+    		padding: 0;
+		    background: none;
+		    border: none;
+		    font-size: 16px;
+		    font-weight: 400;
+    	}
+    	h3:focus{
+    		outline: none;
+    	}
+    	h3:after{
+    		width: 12px;
+			height: 12px;
+			top: 4px;
+    		right: 00px;
+			position: absolute;
+			content: "";
+			background-color: #FFF;
+			-webkit-mask:  url('../images/arrow.svg') no-repeat;
+			mask: url('../images/arrow.svg') no-repeat;
+			-webkit-mask-size: 12px 12px;
+			mask-size: 12px 12px;
+			transform: rotate(90deg);
+			-webkit-transform: rotate(90deg);
+			-moz-transform: rotate(90deg);
+    	}
+    	#filterAccordion{
+    		&>div .item-holder{
+    			.left;
+    			padding-bottom: 6px;
+    			margin-bottom: 6px;
+    		}
+    		.time + div{
+    			.item-holder{
+    				border-bottom: 1px solid rgba(255,255,255,0.1);
+    			}
+    		}
+    		.icon-holder{
+				width: 16px;
+				height: 16px;
+				top: 5px;
+	    		left: 28px;
+	    		display: inline-block;
+	    		position: absolute;
+				background-color: #FFF;
+				-webkit-mask:  url('../images/calendar.svg') no-repeat;
+				mask: url('../images/calendar.svg') no-repeat;
+				-webkit-mask-size: 16px 16px;
+				mask-size: 16px 16px;
+			}
+    		.sub-item-holder{
+    			padding: 3px 25px !important;
+    			position: relative;
+    		}
+    	}
+    }
+}
+/*Accordion override styles*/
+.ui-accordion .ui-accordion-content{
+	background: none;
+    border: none;
+    padding: 0;
+    float: left;
+    margin: 0;
+}
+.ui-selectmenu-button{
+	padding: 0 4px;
+    width: 70% !important;
+    font-size: 16px !important;
+    background: none !important;
+    border: none !important;
+    
+    margin: 0;
+    left: 0;
+    font-weight: 400 !important;
+    width: 100% !important;
+    display: block;
+    &:focus{
+    	outline: none;
+    }
+    .ui-selectmenu-text{
+    	padding: 0 !important;
+    }
+}
+.ui-selectmenu-open{
+	margin-top: 24px !important;
+	width: 170px;
+	ul{
+		width: 100% !important;
+	    background: #1B2532 !important;
+	    border-top: 0 !important;
+	    font-size: 14px !important;
+	    box-shadow: 1px 2px 2px rgba(0,0,0,0.4) !important;
+	}
+}
+.ui-selectmenu-text{
+	display: block;
+	&:after{
+		width: 12px;
+		height: 12px;
+		top: 4px;
+		right: 00px;
+		position: absolute;
+		content: "";
+		background-color: #FFF;
+		-webkit-mask:  url('../images/arrow.svg') no-repeat;
+		mask: url('../images/arrow.svg') no-repeat;
+		-webkit-mask-size: 12px 12px;
+		mask-size: 12px 12px;
+		transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+	}
+}
+.ui-menu-item{
+	padding-top: 8px !important;
+	padding-bottom: 8px !important;
+}
+.ui-menu-item.ui-state-focus{
+	background-color: #2B3541 !important;
+	font-weight: 400 !important;
+	border: 0 !important;
+}
+.menuOverflow{
+	height: 180px;
+}
+.dateRight{
+	margin-left: 8px;
+}
+.to-spacer{
+	margin-right: 20px;
+}
+/*Slider controls*/
+#wind-slider, #pressure-slider{
+	margin-top: 10px;
+	background-color: #FFF;
+	width: 88%;
+    margin-left: 5%;
+	.ui-slider-range{
+		background-color: #3498db;
+		border: none;
+	}
+	.ui-slider-handle{
+		border-radius: 50% !important;
+	    border-color: #DDD;
+	    background: #CCC;
+    	box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+	}
+	.ui-slider{
+		background-color: #FFF;
+		border: none;
+	}
+	.ui-state-active{
+		background: #CCC;
+    	box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+	}
+}
+.sliderValues{
+	font-size: 14px;
+	margin-top: 10px;
+}
+/*Styles for datepicker*/
+#particulardatepicker, #fromdatepicker, #enddatepicker{
+	display: inline;
+    border: 0;
+    background-color: transparent;
+    width: 82px;
+    font-size: 15px;
+    color: #FFF;
+    position: relative;
+    z-index: 2;
+    padding-left: 28px;
+    margin-left: 0px;
+}
+.lastdate{
+	top: 28px !important;
+}
+#particulardatepicker::-webkit-input-placeholder, #fromdatepicker::-webkit-input-placeholder, #enddatepicker::-webkit-input-placeholder {
+   color: #FFF;
+}
+#particulardatepicker:-moz-placeholder { /* Firefox 18- */
+   color: #FFF;  
+}
+#particulardatepicker::-moz-placeholder {  /* Firefox 19+ */
+   color: #FFF;  
+}
+#particulardatepicker:-ms-input-placeholder {  
+   color: #FFF;  
+}
+.clearfilter{
+	.right;
+	font-size: 11px;
+	margin-right: 26px;
+	text-decoration: underline;
+	margin-top: 2px;
+}
+.actionbutton{
+	width: 100%;
+	padding: 10px;
+	font-size: 13px;
+	border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(255,255,255,0.5) inset;
+    color: #FFF;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3498db+0,2d85bf+100 */
+	background: rgb(52,152,219); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(52,152,219,1) 0%, rgba(45,133,191,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(52,152,219,1)), color-stop(100%,rgba(45,133,191,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(52,152,219,1) 0%,rgba(45,133,191,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(52,152,219,1) 0%,rgba(45,133,191,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(52,152,219,1) 0%,rgba(45,133,191,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(52,152,219,1) 0%,rgba(45,133,191,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3498db', endColorstr='#2d85bf',GradientType=0 ); /* IE6-9 */
+}
+.actionbutton:hover{
+	background: rgb(45,133,191); /* Old browsers */
+	box-shadow: 0 1px 1px rgba(255,255,255,0.3) inset;
+	cursor: pointer;
+}
+.actionbutton:active{
+	background: #2C81B2; /* Old browsers */
+	box-shadow: 0 1px 1px rgba(255,255,255,0.3) inset;
+}
+.sidebar .sidebar-section:last-child:hover{
+	background-color: inherit;
+}
+
+/*Media queries for the huge screen*/
+@media screen and (min-width: 6000px) {
+	.sidebar{
+		background-color: #2B3541;
+		width: 6.25%;
+		min-width: 250px;
+		color: #FFF;
+		.left;
+		text-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+		box-shadow: 2px -1px 2px rgba(0,0,0,0.7);
+		cursor: default;
+
+		.sidebar-logo{
+			font-size: 3rem;
+			margin: 40px 0 70px 0;
+		}
+		.sidebar-title{
+			font-size: 2rem !important;
+			padding-left: 4.2rem !important;
+		}
+		.sidebar-section{
+			padding: 2rem 15px;
+		}
+		.sidebar-section .icon-holder{
+			width: 2rem;
+    		height: 2rem;
+    		left: 30px;
+    		top: 32px;
+
+    		&.ocean{
+				-webkit-mask-size: 2rem 2rem;
+				mask-size: 2rem 2rem;
+			}
+			&.view{
+				-webkit-mask-size: 2rem 2rem;
+				mask-size: 2rem 2rem;
+			}
+			&.order{
+				-webkit-mask-size: 2rem 2rem;
+				mask-size: 2rem 2rem;
+			}
+			&.filter{
+				-webkit-mask-size: 2rem 2rem;
+				mask-size: 2rem 2rem;
+			}
+		}
+		.arrow-holder{
+			width: 2rem !important;
+			height: 2rem !important;
+			top: 32px !important;
+    		right: 20px;
+			-webkit-mask-size: 2rem 2rem !important;
+			mask-size: 2rem 2rem !important;
+		}
+		.hurricanes{
+			padding-left: 1.5rem !important;
+			padding-right: 1.5rem !important;
+			.hurricanes-list{
+				height: 520px;
+				.list-header{
+					font-size: 2rem;
+					padding: 1rem;
+				}
+				.list{
+					height: 420px;
+					li{
+						font-size: 1.6rem;
+	    				padding: 1.5rem 1rem 1.5rem 3.4rem;
+	    				overflow: hidden;
+	    				text-overflow: ellipsis;
+	    				white-space: nowrap;
+
+	    				.hurricane-icon{
+	    					width: 1.6rem;
+						    height: 1.6rem;
+						    top: 24px;
+						    left: 12px;
+						    -webkit-mask-size: 1.6rem;
+    						mask-size: 1.6rem;
+	    				}
+    				}
+				}
+			}
+		}
+		.actionbutton{
+			padding: 1.6rem;
+    		font-size: 1.4rem;
+		}
+
+		.slideOut{
+			width: 500px;
+			padding: 2rem;
+			border-top-right-radius: 10px;
+    		border-bottom-right-radius: 10px;
+			.item-holder{
+				width: 100%;
+				margin-bottom: 2rem;
+			}
+			.item-holder label {
+			    font-size: 2rem;
+			    padding: 1.6rem;
+			}
+			.item-holder input[type="checkbox"], input[type="radio"]{
+			    -ms-transform: scale(2);
+			    -moz-transform: scale(2);
+			    -webkit-transform: scale(2);
+			    -o-transform: scale(2);
+			}
+			.sub-item-holder.first {
+			    margin-top: 1.6rem !important;
+			}
+			.sub-item-holder{
+				margin-bottom: 1.2rem;
+			}
+		}
+		#filterAccordion{
+			h3{
+				font-size: 2rem;
+			}
+			.ui-accordion-content{
+				overflow: hidden;
+				padding-left: 10px;
+			}
+		}
+	}
+}
