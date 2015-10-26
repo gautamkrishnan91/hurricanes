@@ -10,9 +10,15 @@
 	<link rel='stylesheet/less' href='css/graphs.less'/>
 	<link rel='stylesheet/less' href='css/mapstyles.less'/>
 	<link rel='stylesheet/less' href='css/datepicker.less'/>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="js/less.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 </head>
 <body>
 	<!-- <input type="text" id="text">
@@ -20,8 +26,14 @@
 	<div class="application-wrapper">
 		<div class="sidebar">
 			<div class="sidebar-logo">Shadows in the Rain</div>
+			<div class="sidebar-section about-section" style="margin-bottom:50px;">
+				<div class="about">
+					This app lets user view  and playback hurricanes that were formed in the pacific and atlantic region in the past couple of years. To get started , make a selection below ( for instance Select an ocean, view top 10 hurricanes based on windspeed) then click update. This is will show all hurricanes based on the selection. To playback those hurricanes one at a time on the map click "play".
+				</div>
+			</div>
 			<div class="sidebar-section">
 				<div class="icon-holder ocean"></div>
+				<div class="number-holder"><div class="number" id="ocean-number">3</div></div>
 				<div class="sidebar-title">Select Ocean</div>
 				<div class="arrow-holder"></div>
 				<!-- Slide Out for Oceans -->
@@ -77,8 +89,8 @@
 			<div class="sidebar-section hurricanes">
 				<div class="hurricanes-list">
 					<div class="list-header">Hurricanes List</div>
-					<ul class="list">
-						<li class="high">
+					<ul id = "Hurricane_list" class="list">
+					<!--	<li class="high">
 							<div class="hurricane-icon"></div>
 							Hurricane 1
 						</li>
@@ -117,11 +129,11 @@
 						<li class="none">
 							<div class="hurricane-icon"></div>
 							Hurricane 10
-						</li>
+						</li>-->
 					</ul>
 				</div>
 			</div>
-			<div class="sidebar-section">
+			<div class="sidebar-section" id="orderby">
 				<div class="icon-holder order"></div>
 				<div class="sidebar-title">Order By</div>
 				<div class="arrow-holder"></div>
@@ -148,10 +160,11 @@
 			</div>
 			<div class="sidebar-section" id="filterby">
 				<div class="icon-holder filter"></div>
+				<div class="number-holder" style="display:none" id="filternumber2"><div class="number" id="filter-number">0</div></div>
 				<div class="sidebar-title">Filter By</div>
 				<div class="arrow-holder"></div>
 				<!-- Slide Out for Order -->
-				<div class="slideOut" style="top:auto; bottom:-60px; ">
+				<div class="slideOut" style="top:auto; bottom:-60px;">
 					<!-- Accordion -->
 					<div id="filterAccordion">
 						<h3 class="item-holder time" id="time">Time <div class="clearfilter" id="cleartime">(clear)</div></h3>
@@ -267,104 +280,77 @@
 		</div>
 		<div id="map"></div>
 		<div class="graphs" id="graphs">
-			<div class="graph-section">
-				<div id="graph-1">
-					<div class="y-text">Number of hurricanes</div>
-					<div class="x-text">Years</div>
-					<!-- <div class="legend">
-						<div class="color-1">Atlantic</div>
-						<div class="color-2">Pacific</div>
-					</div> -->
+			<!-- Section 1 -->
+			<div class="graph-section" id="section1">
+				<div class="graphs-container">
+					<div id="graph-1">
+						<div class="legend">
+							<div class="color-1">Atlantic</div>
+							<div class="color-2">Pacific</div>
+						</div>
+						<div class="y-text">Number of hurricanes</div>
+						<div class="x-text">Years</div>
+					</div>
+					<div id="graph-1-1">
+						<div class="legend">
+							<div class="color">All hurricanes</div>
+						</div>
+						<div class="y-text">Number of hurricanes</div>
+						<div class="x-text">Years</div>
+					</div>
 				</div>
+				<div class="graph-switch">
+					<div class="switch switch1">Individual</div>
+					<div class="switch switch2">Combined</div>
+					<div class="switcher"></div>
+				</div>
+			</div>
+			<!-- Section 2 -->
+			<div class="graph-section" id="section2">
+				<div class="graphs-container">
+					<div id="graph-2">
+						<div class="legend">
+							<div class="color-1">Atlantic</div>
+							<div class="color-2">Pacific</div>
+						</div>
+						<div class="y-text">Wind speed (knots)</div>
+						<div class="x-text">Months of the year</div>
+					</div>
+					<div id="graph-2-1">
+						<div class="legend">
+							<div class="color-1">Atlantic</div>
+							<div class="color-2">Pacific</div>
+						</div>
+						<div class="y-text">Pressure (millibars)</div>
+						<div class="x-text">Months of the year</div>
+					</div>
+				</div>
+				<div class="graph-switch bigger">
+					<div class="switch switch1">Max wind speed</div>
+					<div class="switch switch2">min wind pressure</div>
+					<div class="switcher"></div>
+				</div>
+			</div>
+		</div>
+		<div class="player-controls">
+			<progress value="0" max="100" class="progress-bar" id="progressBar"></progress>
+			<div class="controls-inner">
+				<div class="decrease-speed"></div>
+				<div class="play-pause">
+					<div class="play"></div>
+					<div class="pause" style="display:none"></div>
+				</div>
+				<div class="increase-speed"></div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		$("#map").css("height",$(document).height());
 	</script>
-	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/ui.js"></script>
-	<script>
-		var 
-			// margin = {top: 20, right: 0, bottom: 30, left: 70},
-			margin = {top: 20, right: 20, bottom: 30, left: 140},
-		    width = $(".graph-section").width() - margin.left - margin.right,
-		    height = 500 - margin.top - margin.bottom;
-
-		var parseDate = d3.time.format("%Y").parse;
-
-		var x = d3.time.scale()
-		    .range([0, width]);
-
-		var y = d3.scale.linear()
-		    .range([height, 0]);
-
-		var xAxis = d3.svg.axis()
-		    .scale(x)
-		    .orient("bottom");
-
-		var yAxis = d3.svg.axis()
-		    .scale(y)
-		    .orient("left");
-
-		var line1 = d3.svg.line()
-		   .x(function(d) { return x(d.year); })
-		   .y(function(d) { return y(d.noh); });
-
-		var line2 = d3.svg.line()
-		   .x(function(d) { return x(d.year); })
-		   .y(function(d) { return y(d.noh); });
-		  
-		/*var line = d3.svg.line()
-		    .interpolate("basis")
-		    .x(function(d) { return x(d.year); })
-		    .y(function(d) { return y(d.noh); });
-		*/
-		var svg = d3.select("#graph-1").append("svg")
-		    .attr("width", width + margin.left + margin.right)
-		    .attr("height", height + margin.top + margin.bottom)
-		  .append("g")
-		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		d3.json("data11.php", function(error, data) {
-		    console.log(data);
-		   data.forEach(function(d) {
-		        d.noh = +d.noh;
-		        d.year = parseDate(d.year);
-		    });
-		  data1 = data.filter(function(tee){return tee.type == "P"})
-		  data = data.filter(function(tee){return tee.type == "AL"})
-		  console.log(data);
-		  x.domain(d3.extent(data, function(d) { return d.year; }));
-		  //y.domain(d3.extent(data, function(d) { return d.noh; }));
-		  y.domain([0, d3.max(data, function(d) { return d.noh; })]);
-		  svg.append("g")
-		      .attr("class", "x axis")
-		      .attr("transform", "translate(0," + height + ")")
-		      .call(xAxis);
-
-		  svg.append("g")
-		      .attr("class", "y axis")
-		      .call(yAxis)
-		    .append("text")
-		      .attr("transform", "rotate(-90)")
-		      .attr("y", 6)
-		      .attr("dy", ".71em")
-		      .style("text-anchor", "end")
-		      .style("fill", "#FFF");
-		      
-		      //.text("Number of Hurricanes")   
-
-		  svg.append("path")
-		      .datum(data)
-		      .attr("class", "line1")
-		      .attr("d", line1);
-
-		  svg.append("path")
-		      .datum(data1)
-		      .attr("class", "line2")
-		      .attr("d", line2);
-		});
-	</script>
+	<script type="text/javascript" src="js/graphs.js"></script>
+	<script type="text/javascript" src="js/plot.js"></script>
+	<script type="text/javascript" src="js/script2.js"></script>
 </body>
 </html>

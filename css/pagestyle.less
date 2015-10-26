@@ -45,6 +45,18 @@ body{
 		-webkit-transition: all 0.2s;
     	transition: all 0.2s;
 
+    	&.about-section:hover{
+    		background-color: inherit;
+    	}
+
+    	.about{
+    		font-size: 1.6rem;
+    		padding-left: 20px;
+    		line-height: 2.8rem;
+    		padding-right: 20px;
+    		margin-bottom: 50px;
+    	}
+
 		.icon-holder{
 			width: 16px;
 			height: 16px;
@@ -76,6 +88,22 @@ body{
 				mask: url('../images/filter.svg') no-repeat;
 				-webkit-mask-size: 16px 16px;
 				mask-size: 16px 16px;
+			}
+		}
+		.number-holder{
+			width: 30px;
+			height: 30px;
+			background-color: #e74c3c;
+			position: absolute;
+			border-radius: 50%;
+			left: 48px;
+		    top: 16px;
+		    box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+
+			.number{
+				position: absolute;
+				font-size: 1.4rem;
+    			margin: 4px 9px;
 			}
 		}
 		.arrow-holder{
@@ -205,6 +233,7 @@ body{
     	background-color: #1B2532;
     	padding: 18px;
     	position: absolute;
+    	z-index: 10;
     	visibility: hidden;
     	top: 0;
     	left: 100%;
@@ -297,7 +326,7 @@ body{
 				mask-size: 16px 16px;
 			}
     		.sub-item-holder{
-    			padding: 3px 25px !important;
+    			padding: 3px 25px;
     			position: relative;
     		}
     	}
@@ -478,7 +507,7 @@ body{
 @media screen and (min-width: 6000px) {
 	.sidebar{
 		background-color: #2B3541;
-		width: 6.25%;
+		width: 10.25%;
 		min-width: 250px;
 		color: #FFF;
 		.left;
@@ -488,7 +517,7 @@ body{
 
 		.sidebar-logo{
 			font-size: 3rem;
-			margin: 40px 0 70px 0;
+			margin: 150px 0;
 		}
 		.sidebar-title{
 			font-size: 2rem !important;
@@ -564,7 +593,7 @@ body{
 		}
 
 		.slideOut{
-			width: 500px;
+			width: 600px;
 			padding: 2rem;
 			border-top-right-radius: 10px;
     		border-bottom-right-radius: 10px;
@@ -592,11 +621,188 @@ body{
 		#filterAccordion{
 			h3{
 				font-size: 2rem;
+
+				&:after{
+					width: 1.6rem;
+    				height: 1.6rem;
+    				top: 8px;
+    				right: 10px;
+    				-webkit-mask-size: 1.6rem 1.6rem;
+    				mask-size: 1.6rem 1.6rem;
+				}
 			}
 			.ui-accordion-content{
 				overflow: hidden;
 				padding-left: 10px;
 			}
+			.item-holder label{
+				padding: 1rem;
+			}
+			.item-holder{
+				margin-top: 15px;
+			}
+			.sub-item-holder{
+				padding: 3px 0 3px 45px !important;
+				label{
+					font-size: 1.7rem;
+				}
+			}
+			.icon-holder{
+				width: 2rem !important;
+				height: 2rem !important;
+				-webkit-mask-size: 2rem !important;
+    			mask-size: 2rem !important;
+    			top: 3px !important;
+    			left: 46px !important;
+			}
+			#particulardatepicker, #fromdatepicker, #enddatepicker{
+				width: 140px;
+    			font-size: 1.6rem;
+    			padding-left: 48px;
+			}
+			.lastdate{
+				margin-left: 275px;
+			}
+			.clearfilter{
+				margin-right: 70px;
+				margin-top: 10px;
+				font-size: 1.2rem;
+			}
+			.ui-selectmenu-button{
+				width: 90% !important;
+				font-size: 1.8rem !important;
+			}
+			.ui-selectmenu-text:after {
+			    width: 1.4rem;
+			    height: 1.4rem;
+			    top: 4px;
+			    right: 00px;
+			    -webkit-mask-size: 1.4rem 1.4rem;
+			    mask-size: 1.4rem 1.4rem;
+			}
 		}
+	}
+	.ui-selectmenu-menu{
+		width: 440px !important;
+	}
+	.ui-menu .ui-menu-item{
+		font-size: 1.6rem !important;
+	}
+	.ui-menu-item {
+	    padding-top: 15px !important;
+	    padding-bottom: 15px !important;
+	}
+	.menuOverflow{
+		height: 480px;
+	}
+	.ui-accordion-content{
+		width: 100%;
+		.left;
+
+		.ui-slider .ui-slider-handle{
+			width: 2.2em;
+			height: 2.2em;
+		}
+		#wind-slider, #pressure-slider{
+			height: 30px;
+			margin-left: 2%;
+		}
+		.sliderValues {
+		    font-size: 1.4rem;
+		    margin-top: 20px;
+		    margin-right: 20px;
+		}
+	}
+}
+
+
+/*Player controls*/
+.player-controls{
+	width: 800px;
+	position: absolute;
+	left: 46.5%;
+	margin-left: -400px;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.8);
+	height: 250px;
+	z-index: 10;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+
+	.progress-bar {
+		background-color: #FFF;
+	    border: 0;
+	    height: 20px;
+	    width: 630px;
+	    border-radius: 50px;
+	    margin-left: 90px;
+    	margin-top: 55px;
+	}
+	.progress-bar::-webkit-progress-bar {
+		background-color: #f3f3f3;
+		border-radius: 50px;
+	}
+	.progress-bar::-webkit-progress-value {
+		background: #3498db;
+		border-radius: 50px;
+	}
+	.controls-inner{
+		margin-top: 50px;
+		.left;
+		width: 600px;
+		margin-left: 100px;
+	}
+	.play-pause{
+		width: 5rem;
+		height: 5rem;
+		.left;
+		margin-left: 190px;
+
+		.play{
+			.left;
+			width: 5rem;
+			height: 5rem;
+			background-color: #FFF;
+			-webkit-mask:  url('../images/play.svg') no-repeat;
+			mask: url('../images/play.svg') no-repeat;
+			-webkit-mask-size: 5rem 5rem;
+			mask-size: 5rem 5rem;
+		}
+		.pause{
+			.left;
+			width: 5rem;
+			height: 5rem;
+			background-color: #FFF;
+			-webkit-mask:  url('../images/pause.svg') no-repeat;
+			mask: url('../images/pause.svg') no-repeat;
+			-webkit-mask-size: 5rem 5rem;
+			mask-size: 5rem 5rem;
+		}
+	}
+	.increase-speed{
+		.right;
+		width: 5rem;
+		height: 5rem;
+		background-color: #FFF;
+		-webkit-mask:  url('../images/speed.svg') no-repeat;
+		mask: url('../images/speed.svg') no-repeat;
+		-webkit-mask-size: 5rem 5rem;
+		mask-size: 5rem 5rem;
+		-webkit-transition: all 0.2s;
+		transition: all 0.2s;
+		transform: scale(1,1);
+	}
+	.decrease-speed{
+		.left;
+		width: 5rem;
+		height: 5rem;
+		background-color: #FFF;
+		-webkit-mask:  url('../images/speed.svg') no-repeat;
+		mask: url('../images/speed.svg') no-repeat;
+		-webkit-mask-size: 5rem 5rem;
+		mask-size: 5rem 5rem;
+		-webkit-transition: all 0.2s;
+		transition: all 0.2s;
+		transform: scale(-1,1);
 	}
 }

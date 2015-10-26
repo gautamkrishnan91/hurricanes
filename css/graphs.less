@@ -1,3 +1,15 @@
+/* Variable declarations */
+.box-sized{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.left{ float: left; }
+.right{ float: right; }
+*:focus{
+	outline: none;
+}
+
 .box-sized{
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -24,20 +36,81 @@
 		.left;
 		.box-sized;
 		padding: 10px;
+		position: relative;
 	}
 }
-#graph-1{
+#graph-1, #graph-1-1, #graph-2, #graph-2-1{
+	margin-top: 30px;
 	position: relative;
 
 	.legend{
+		font-size: 1.4rem;
 		position: absolute;
-		bottom: -40px;
+		top: 10px;
+		width: 200px;
+		left: 50%;
+		margin-left: -100px;
 		.color-1{
-			
+			.left;
+			position: relative;
+			&:after{
+				content: "";
+				position: absolute;
+				left: -26px;
+			    width: 15px;
+			    height: 15px;
+			    top: 3px;
+				border-radius: 50%;
+				background-color: #2ac0c1;
+			}
 		}
 		.color-2{
-
+			position: relative;
+			.right;
+			&:after{
+				content: "";
+				position: absolute;
+				left: -26px;
+			    width: 15px;
+			    height: 15px;
+			    top: 3px;
+				border-radius: 50%;
+				background-color: #F6C86A;
+			}
 		}
+		.color{
+			position: relative;
+			.right;
+			&:after{
+				content: "";
+				position: absolute;
+				left: -26px;
+			    width: 15px;
+			    height: 15px;
+			    top: 3px;
+				border-radius: 50%;
+				background-color: #4bbffe;
+			}
+		}
+	}
+}
+.graphs-container{
+	width: 3500px;
+	float: left;
+	margin-left: -1984px;
+	transition: all 0.2s;
+
+	#graph-1{
+		.right;
+	}
+	#graph-1-1{
+		.left;
+	}
+	#graph-2{
+		.right;
+	}
+	#graph-2-1{
+		.left;
 	}
 }
 .axis path,
@@ -48,7 +121,8 @@
 }
 
 .x.axis path, .y.axis path {
-  display: none;
+  fill: #FFF;
+  stroke-width: 0.5px;
 }
 .x.axis, .y.axis{
 	fill: #FFF;
@@ -79,18 +153,133 @@
     bottom: -18px;
     text-align: center;
 }
+.line {
+  fill: none;
+  stroke: #4bbffe;
+  stroke-width: 2.5px;
+}
+.graph-switch{
+	text-transform: uppercase;
+	width: 400px;
+    float: left;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #FFF;
+    height: 54px;
+    position: absolute;
+    background-color: #FFF;
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+    bottom: 20px;
+    left: 50%;
+    margin-left: -200px;
+    cursor: pointer;
+    &.bigger{
+		width: 600px;
+		margin-left: -300px;
+    }
+}
+.switch1{
+	float: left;
+    padding: 15px 40px;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    transition: all 0.05s ease;
+    width: 50%;
+    .box-sized;
+    text-align: center;
+}
+.switch2{
+	float: right;
+    padding: 15px 40px;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    color: #333;
+    transition: all 0.05s ease;
+    width: 50%;
+    .box-sized;
+    text-align: center;
+}
+.switcher{
+	background-color: #3498db;
+	width: 200px;
+	height: 54px;
+	position: absolute;
+	left: 0;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	transition: all 0.05s ease;
+}
+.bigger .switcher{
+	width: 300px;
+}
+/*Bar graph*/
+.bar {
+  fill: #2ac0c1;
+}
+.bar2 {
+  fill: #F6C86A;
+}
 @media screen and (min-width: 6000px) {
 	#graphs{
 		width: 18.75%;
-		font-size: 1.8rem;
+		font-size: 2rem;
+	}
+	.graph-section{
+		height: 500px;
+    	border-bottom: 3px solid rgba(255,255,255,0.1);
+    	border-top: 3px solid rgba(0,0,0,0.1);
 	}
 	.x-text{
-		bottom: -4rem;
+		bottom: -3rem;
 	}
 	.y-text{
-		font-size: 1.8rem;
+		font-size: 2rem;
 		width: 500px;
-		left: -205px;
-    	top: 100px;
+		left: -200px;
+    	top: 40px;
 	}
+	svg{
+		overflow: visible;
+	}
+}
+.d3-tip {
+  line-height: 1;
+  padding: 15px;
+  background: rgba(255, 255, 255, 1);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  color: #333;
+  border-radius: 2px;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 1.4rem;
+  width: 100%;
+  line-height: 1;
+  color: rgba(255, 255, 255, 1);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: 0px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
 }
