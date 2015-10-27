@@ -62,11 +62,19 @@ $(document).ready(function(){
      $("#showparticular").prop("checked",true);
      $("#top5").prop("checked",true);
 	
-	// ajax_call();
+	ajax_call();
 
 });
 // Check controls here
-
+//Function for clicking on a list element in the hurricane list.
+document.getElementById("Hurricane_list").addEventListener("click",function(e) {
+        if(e.target && e.target.nodeName == "LI") {
+         //alert(e.target.id + " was clicked");
+         var individual_id = [];
+         individual_id.push(e.target.id);
+         get_Id(individual_id);
+        }
+    });
 // Setting defaults
 $("#showall").prop("checked", true);
 
@@ -243,6 +251,9 @@ $("#selectedinterval").click(function(){
 	$("#month").selectmenu("refresh");
 	$("#fromdatepicker").val("01/01/2010");
 	$("#enddatepicker").val("01/01/2011");
+	time = "false";
+	interval1 = "01/01/2010";
+	interval2 = "01/01/2011";
 });
 $("#fromdatepicker, #enddatepicker").change(function(){
 	if(($("#fromdatepicker").val()!="Pick a date") && ($("#enddatepicker").val()!="Pick a date")){
@@ -307,6 +318,9 @@ $("#cleartime, #clearlandfall, #clearwindspeed, #clearpressure").click(function(
 
 // Sending on button click
 $(".actionbutton").click(function(){
+
+	
+
 	ajax_call();
 	first_time = "true";
 	// Updating filter count
@@ -326,13 +340,22 @@ $(".actionbutton").click(function(){
 	if(filter_count>0){$("#filternumber2").show();}
 	if(filter_count==0){$("#filternumber2").hide();}
 });
+
+	var hid = [];
+	var hname = [];
+	var startdate = [];
+	var enddate = [];
+	var maxwind = [];
+
 function ajax_call() {
 
 	// Watson's code
 	var var_ret;
-	var hid = [];
-	var hname = [];
-	var startdate = [];
+	hid = [];
+	hname = [];
+	startdate = [];
+	enddate = [];
+	maxwind = [];
 
 	var xmlhttp=false;
 	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
@@ -348,53 +371,92 @@ function ajax_call() {
 			var_ret = JSON.parse(xmlhttp.responseText);
 			//alert((xmlhttp.responseText));
 			//console.log((var_ret));
-			alert(var_ret.length);
+			//alert(var_ret.length);
 			if (var_ret.length == 0)
 			{
 				alert("Sorry! No hurricane records for the given fiters.");
 			}
 			else
 			{
-					for(i=0;i<var_ret.length;i++)
+				for(i=0;i<var_ret.length;i++)
+				{
+					hid.push(var_ret[i][0]);
+					hname.push(var_ret[i][1]);
+					startdate.push(var_ret[i][2]);
+					maxwind.push(+var_ret[i][3]);
+					enddate.push(var_ret[i][4]);
+				}
+				//alert(hid);
+				//alert(hname);
+				//alert(enddate);
+				var hurricaneList = document.getElementById("Hurricane_list");
+				hurricaneList.innerHTML = " ";
+				//alert(hname.length);
+				for(i=0;i<hname.length;i++)
+				{ 		
+					var newListItem = document.createElement("li");
+					var att = document.createAttribute("id");	
+					var maxattr = document.createAttribute("class");
+					//alert(hname[i].substr(0,2));
+					if(hid[i] == hname[i])
 					{
-						hid.push(var_ret[i][0]);
-						hname.push(var_ret[i][1]);
-						startdate.push(var_ret[i][2]);
-					}
-					//alert(hid);
-					//alert(hname);
-					//alert(startdate);
-					var hurricaneList = document.getElementById("Hurricane_list");
-					hurricaneList.innerHTML = " ";
-					alert(hname.length);
-					for(i=0;i<hname.length;i++)
-					{ 		
-						var newListItem = document.createElement("li");
-						//alert(hname[i].substr(0,2));
-						if(hid[i] == hname[i])
+						if (hname[i].substr(0,2) == "AL")
 						{
-							if (hname[i].substr(0,2) == "AL")
-							{
-								newListItem.innerHTML = "ATLANTIC " + hname[i].substr(2,2) + " " + hname[i].substr(4,(hname[i].length-2));
-							}
-							else if ((hname[i].substr(0,2) == "EP") || (hname[i].substr(0,2) == "CP"))
-							{
-							newListItem.innerHTML = "PACIFIC " + hname[i].substr(2,2) + " " + hname[i].substr(4,(hname[i].length-2));
-							}
+							newListItem.innerHTML = "<div class='hurricane-icon'></div>" + "ATLANTIC " + hname[i].substr(2,2) + " " + hname[i].substr(4,(hname[i].length-2));
 						}
-						else
+						else if ((hname[i].substr(0,2) == "EP") || (hname[i].substr(0,2) == "CP"))
 						{
-						//var newListItem = document.createElement("li");
-						newListItem.innerHTML = hname[i].substring(0,hname[i].length-4) + " " + hname[i].substr(-4,hname[i].length);
+							newListItem.innerHTML = "<div class='hurricane-icon'></div>" + "PACIFIC " + hname[i].substr(2,2) + " " + hname[i].substr(4,(hname[i].length-2));
 						}
-						hurricaneList.appendChild(newListItem);
 					}
-					alert(hid);
-					get_Id(hid);
-					//heatMap();
-			}
+					else
+					{
+					newListItem.innerHTML = "<div class='hurricane-icon'></div>" + hname[i].substring(0,hname[i].length-4) + " " + hname[i].substr(-4,hname[i].length);
+					}
+					hurricaneList.appendChild(newListItem);
+					att.value = hid[i];
+					if (maxwind[i] > 96)
+					{
+						maxattr.value = "high";
+					}
+					else if ((maxwind[i] >= 64) || (maxwind[i] <= 95))
+					{
+						maxattr.value = "medium";
+					}
+					else
+					{
+						maxattr.value = "low";
+					}
+					newListItem.setAttributeNode(att);
+					newListItem.setAttributeNode(maxattr);
+				}
+				//alert(hid);
+				if($('#individual').is(':checked')) 
+					{
+						;
+					}
+					else
+					{
+				document.getElementById("details").innerHTML=" Hover on any of the Hurricane to show more infor";
+				$(".play").show();
+				$(".pause").hide();
+				get_Id(hid);
+				if($('#particulardate, #particularyear').is(':checked')){
+					d3.select("#graph-3").selectAll('svg').remove();
+					d3.select("#graph-3-1").selectAll('svg').remove();
+					d3.select("#graph-4").selectAll('svg').remove();
+					d3.select("#graph-4-1").selectAll('svg').remove();
+					var time1= "(For year "+hname[1].substr(-4,hname[1].length)+")";
+					$("#3-text, #3-1-text, #4-text, #4-1-text").html(time1);
+					dynamicgraph(hname[1].substr(-4,hname[1].length));
+					
+				}
+					}
+
+			}				//heatMap();
+			
 		}
-	}
+	}	
 	xmlhttp.send(null)
 	return false;
 }
@@ -432,6 +494,38 @@ $("#section2 .switch2").click(function(){
 	$("#section2 .graphs-container").css("margin-left","0");
 });	
 
+//Third Graph
+$("#section3 .switch1").click(function(){
+	$("#section3 .switcher").css("left","0");
+	$("#section3 .switcher").css("border-radius","10px 0 0 10px");
+	$("#section3 .switch2").css("color","#333");
+	$("#section3 .switch1").css("color","#FFF");
+	$("#section3 .graphs-container").css("margin-left","-1984px");
+});	
+$("#section3 .switch2").click(function(){
+	$("#section3 .switcher").css("left","300px");
+	$("#section3 .switcher").css("border-radius","0 10px 10px 0");
+	$("#section3 .switch1").css("color","#333");
+	$("#section3 .switch2").css("color","#FFF");
+	$("#section3 .graphs-container").css("margin-left","0");
+});	
+
+//Fourth Graph
+$("#section4 .switch1").click(function(){
+	$("#section4 .switcher").css("left","0");
+	$("#section4 .switcher").css("border-radius","10px 0 0 10px");
+	$("#section4 .switch2").css("color","#333");
+	$("#section4 .switch1").css("color","#FFF");
+	$("#section4 .graphs-container").css("margin-left","-1984px");
+});	
+$("#section4 .switch2").click(function(){
+	$("#section4 .switcher").css("left","300px");
+	$("#section4 .switcher").css("border-radius","0 10px 10px 0");
+	$("#section4 .switch1").css("color","#333");
+	$("#section4 .switch2").css("color","#FFF");
+	$("#section4 .graphs-container").css("margin-left","0");
+});	
+
 // Hide filter and order section for selected categories of hurricanes
 $("#showparticular, #top5, #top10, #ourtop5, #individual").click(function(){
 	$("#orderby, #filterby").css("visibility","hidden");
@@ -440,12 +534,39 @@ $("#showall").click(function(){
 	$("#orderby, #filterby").css("visibility","visible");
 });
 
+// Speed controls
+$(".decrease-speed").click(function(){
+	decrease_speed();
+});
+$(".increase-speed").click(function(){
+	increase_speed();
+});
+
 // Play pause controls
 $(".play").click(function(){
 	$(this).hide();
 	$(".pause").show();	
+	if(first_time=="true"){
+		var seasonstatus;
+		if($('#season').is(':checked')) { seasonstatus = true;}
+		else
+		{
+			seasonstatus = false;
+		}
+		first_time=false;
+		get_Identity(hid,hname,startdate,enddate,seasonstatus);
+	}
+	else{
+		resume_plotting();
+	}
 });
 $(".pause").click(function(){
 	$(this).hide();
 	$(".play").show();
+	pause_plotting();
+});
+
+// Heatmap control
+$("#heatmap").click(function(){
+	heatMap();
 });

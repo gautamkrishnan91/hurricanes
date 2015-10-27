@@ -216,7 +216,159 @@
 								<div class="sub-item-holder first">
 								    <select name="year" id="year">
 										<option selected="selected">All</option>
-										<option>Pre 2004</option>
+										<option>1851</option>
+										<option>1852</option>
+										<option>1853</option>
+										<option>1854</option>
+										<option>1855</option>
+										<option>1856</option>
+										<option>1857</option>
+										<option>1858</option>
+										<option>1859</option>
+										<option>1860</option>
+										<option>1861</option>
+										<option>1862</option>
+										<option>1863</option>
+										<option>1864</option>
+										<option>1865</option>
+										<option>1866</option>
+										<option>1867</option>
+										<option>1868</option>
+										<option>1869</option>
+										<option>1870</option>
+										<option>1871</option>
+										<option>1872</option>
+										<option>1873</option>
+										<option>1874</option>
+										<option>1875</option>
+										<option>1876</option>
+										<option>1877</option>
+										<option>1878</option>
+										<option>1879</option>
+										<option>1880</option>
+										<option>1881</option>
+										<option>1882</option>
+										<option>1883</option>
+										<option>1884</option>
+										<option>1885</option>
+										<option>1886</option>
+										<option>1887</option>
+										<option>1888</option>
+										<option>1889</option>
+										<option>1890</option>
+										<option>1891</option>
+										<option>1892</option>
+										<option>1893</option>
+										<option>1894</option>
+										<option>1895</option>
+										<option>1896</option>
+										<option>1897</option>
+										<option>1898</option>
+										<option>1899</option>
+										<option>1900</option>
+										<option>1901</option>
+										<option>1902</option>
+										<option>1903</option>
+										<option>1904</option>
+										<option>1905</option>
+										<option>1906</option>
+										<option>1907</option>
+										<option>1908</option>
+										<option>1909</option>
+										<option>1910</option>
+										<option>1911</option>
+										<option>1912</option>
+										<option>1913</option>
+										<option>1914</option>
+										<option>1915</option>
+										<option>1916</option>
+										<option>1917</option>
+										<option>1918</option>
+										<option>1919</option>
+										<option>1920</option>
+										<option>1921</option>
+										<option>1922</option>
+										<option>1923</option>
+										<option>1924</option>
+										<option>1925</option>
+										<option>1926</option>
+										<option>1927</option>
+										<option>1928</option>
+										<option>1929</option>
+										<option>1930</option>
+										<option>1931</option>
+										<option>1932</option>
+										<option>1933</option>
+										<option>1934</option>
+										<option>1935</option>
+										<option>1936</option>
+										<option>1937</option>
+										<option>1938</option>
+										<option>1939</option>
+										<option>1940</option>
+										<option>1941</option>
+										<option>1942</option>
+										<option>1943</option>
+										<option>1944</option>
+										<option>1945</option>
+										<option>1946</option>
+										<option>1947</option>
+										<option>1948</option>
+										<option>1949</option>
+										<option>1950</option>
+										<option>1951</option>
+										<option>1952</option>
+										<option>1953</option>
+										<option>1954</option>
+										<option>1955</option>
+										<option>1956</option>
+										<option>1957</option>
+										<option>1958</option>
+										<option>1959</option>
+										<option>1960</option>
+										<option>1961</option>
+										<option>1962</option>
+										<option>1963</option>
+										<option>1964</option>
+										<option>1965</option>
+										<option>1966</option>
+										<option>1967</option>
+										<option>1968</option>
+										<option>1969</option>
+										<option>1970</option>
+										<option>1971</option>
+										<option>1972</option>
+										<option>1973</option>
+										<option>1974</option>
+										<option>1975</option>
+										<option>1976</option>
+										<option>1977</option>
+										<option>1978</option>
+										<option>1979</option>
+										<option>1980</option>
+										<option>1981</option>
+										<option>1982</option>
+										<option>1983</option>
+										<option>1984</option>
+										<option>1985</option>
+										<option>1986</option>
+										<option>1987</option>
+										<option>1988</option>
+										<option>1989</option>
+										<option>1990</option>
+										<option>1991</option>
+										<option>1992</option>
+										<option>1993</option>
+										<option>1994</option>
+										<option>1995</option>
+										<option>1996</option>
+										<option>1997</option>
+										<option>1998</option>
+										<option>1999</option>
+										<option>2000</option>
+										<option>2001</option>
+										<option>2002</option>
+										<option>2003</option>
 										<option>2004</option>
 										<option>2005</option>
 										<option>2006</option>
@@ -278,7 +430,11 @@
 				<button class="actionbutton">UPDATE</button>
 			</div>
 		</div>
-		<div id="map"></div>
+		<div id="map">
+			<div id="info">
+				<p id="details"> Hover on any of the Hurricane to show more info</p>
+			</div>
+		</div>
 		<div class="graphs" id="graphs">
 			<!-- Section 1 -->
 			<div class="graph-section" id="section1">
@@ -327,10 +483,61 @@
 				</div>
 				<div class="graph-switch bigger">
 					<div class="switch switch1">Max wind speed</div>
-					<div class="switch switch2">min wind pressure</div>
+					<div class="switch switch2">min air pressure</div>
 					<div class="switcher"></div>
 				</div>
 			</div>
+			<div class="graph-section" id="section3">
+				<div class="graphs-container">
+					<div id="graph-3">
+						<div class="legend">
+							<div class="color-graph-3">Atlantic</div>
+							<div class="text-right" id="3-text">(For year 1994)</div>
+						</div>
+						<div class="y-text">Wind speed (knots)</div>
+						<div class="x-text">Date (Atl)</div>
+					</div>
+					<div id="graph-3-1">
+						<div class="legend">
+							<div class="color-graph-3">Atlantic</div>
+							<div class="text-right" id="3-1-text">(For year 1994)</div>
+						</div>
+						<div class="y-text">Pressure (millibars)</div>
+						<div class="x-text">Date (Atl)</div>
+					</div>
+				</div>
+				<div class="graph-switch bigger">
+					<div class="switch switch1">Max wind speed</div>
+					<div class="switch switch2">min air pressure</div>
+					<div class="switcher"></div>
+				</div>
+			</div>
+			<div class="graph-section" id="section4">
+				<div class="graphs-container">
+					<div id="graph-4">
+						<div class="legend">
+							<div class="color-2">Pacific</div>
+							<div class="text-right" id="4-text">(For year 1994)</div>
+						</div>
+						<div class="y-text">Wind speed (knots)</div>
+						<div class="x-text">Date (Pac)</div>
+					</div>
+					<div id="graph-4-1">
+						<div class="legend">
+							<div class="color-2">Pacific</div>
+							<div class="text-right" id="4-1-text">(For year 1994)</div>
+						</div>
+						<div class="y-text">Pressure (millibars)</div>
+						<div class="x-text">Date(Pac)</div>
+					</div>
+				</div>
+				<div class="graph-switch bigger">
+					<div class="switch switch1">Max wind speed</div>
+					<div class="switch switch2">min air pressure</div>
+					<div class="switcher"></div>
+				</div>
+			</div>
+			<button id="heatmap">Heatmap</button>
 		</div>
 		<div class="player-controls">
 			<progress value="0" max="100" class="progress-bar" id="progressBar"></progress>
@@ -351,6 +558,8 @@
 	<script type="text/javascript" src="js/ui.js"></script>
 	<script type="text/javascript" src="js/graphs.js"></script>
 	<script type="text/javascript" src="js/plot.js"></script>
+	
 	<script type="text/javascript" src="js/script2.js"></script>
+	<script type="text/javascript" src="js/heatmap.js"></script>
 </body>
 </html>

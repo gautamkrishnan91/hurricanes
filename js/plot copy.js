@@ -1,6 +1,4 @@
 
-  
-
     var streets=L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
            //maxZoom: 18,
            id: 'mapbox.streets',
@@ -36,15 +34,13 @@
           noWrap: 'false'
        });
     var windLayer = L.layerGroup([]);
-    var heatLayer = L.layerGroup([]);
      
-     var map=L.map('map',{layers: [satellite,windLayer],
+     var map=L.map('map',{layers: [pirates,windLayer],
                 center: [30.8833, -97.0167],
                zoom: 6,
               continuousWorld: 'false',
               noWrap: 'false'
                   });
-     
 
  var baseMaps = { "Streets" : streets,
              "Satellite" : satellite,
@@ -64,19 +60,19 @@
     iconSize: [38, 38],
     iconAnchor: [19, 37],
 	});	 
-        var tomorrow = 0;
+
       var step=1000;
       var speed=step/4;
+      console.log(speed);
       var markerLayer = []; 						// Create Layer for each component related to the hurricane
 	  var polyLayer = [];
 	  var quadrophonicLayer= [];
-      var pointsPlotted = []; 						// This variable keeps track of latlong values added for each hurricane 
+      var pointsAdded = []; 						// This variable keeps track of latlong values added for each hurricane 
 	  var var_ret=[];								// Stores the values fetched from php query
 	  var limit= [];								// Stores the total lat long values for a particular hurricane
-	  var identity= [];
-	  var hurricanenames = [];
-	  var startdates=[];
-	  var enddates=[];
+	  var identity= ["AL012001","AL022001","AL032001","AL042001","AL052001","AL062001","AL072001","AL082001","AL092001","AL102001","AL112001","AL122001","AL132001","AL142001","AL152001","AL162001","AL172001","AL012002","AL022002","AL032002"];
+	  var startdates=[20010605,20010711,20010802,20010814,20010822,20010901,20010907,20010911,20010919,20010921,20011004,20011006,20011011,20011027,20011029,20011104,20011123,20020714,20020804,20020805];
+	  var enddates=[20010619,20010712,20010808,20010822,20010829,20010917,20010919,20010921,20010920,20010927,20011009,20011008,20011015,20011031,20011106,20011106,20011204,20020719,20020809,20020808]
 	  var j=0; 
 	  var timer=0;  //timer clock tick - ticks at 1 day per second by default
 	  var flag=true; // 
@@ -85,68 +81,23 @@
 	  var playbySeason=true;
 	  var season=true;
 
-	  //create_date();
-	  //var tomorrow = new Date(startdates[0]);
+	  create_date();
+	  var tomorrow = new Date(startdates[0]);
 	  //****************------------------------------***********************
 	  //**********-----------------------------------------------************
 	  
 	  
 	  
-	  function get_Identity(hurr_list,hurr_name,sdates,edates,pbs)  //This function accepts list of hurricanes, start date , end date of each hurricane and plotbyseason bool value
+	  function get_Identity(hurr_list,sdates,edates,pbs)  //This function accepts list of hurricanes, start date , end date of each hurricane and plotbyseason bool value
 	  {
-	  	
-	  	step=1000;
-       speed=step/4;
-       markerLayer = []; 						// Create Layer for each component related to the hurricane
-	   polyLayer = [];
-	   quadrophonicLayer= [];
-       pointsPlotted = []; 						// This iable keeps track of latlong values added for each hurricane 
-	   var_ret=[];								// Stores the values fetched from php query
-	   limit= [];								// Stores the total lat long values for a particular hurricane
-	   identity= [];
-	   startdates=[];
-	   enddates=[];
-	   j=0; 
-	   timer=0;  //timer clock tick - ticks at 1 day per second by default
-	   flag=true; // 
-	   resume=false;
-	   playstate=[];
-	   playbySeason=true;
-	   season=true;
-	  		
-	  windLayer.eachLayer(function(layer)
-	  {
-	      map.removeLayer(layer);
-	  });
-
-	  pressureLayer.eachLayer(function(layer)
-	  {
-	      map.removeLayer(layer);
-	  });
-
-	  circleLayer.eachLayer(function(layer)
-	  {
-	      map.removeLayer(layer);
-	  });
-  
-	  typeLayer.eachLayer(function(layer)
-	  {
-	      map.removeLayer(layer);
-	  });
- 			pointsPlotted=[];
- 			limit=[];
-	  		j=0;
-	  		
 	  		identity=hurr_list;
-	  		hurricanenames=hurr_name;
 	  		startdates=sdates;
 	  		enddates=edates;
 	  		playbySeason=pbs;
 			create_date();
-			
 	  		if(playbySeason)
 	  		{
-	  			tomorrow = new Date(startdates[0]);
+	  			var tomorrow = new Date(startdates[0]);
 	  			start_Timer();
 	  		}
 	  		else
@@ -160,7 +111,6 @@
 	 	for(s=0; s<startdates.length;s++)
 	 	{
 	 		startdates[s]=new Date(startdates[s].toString().substring(0, 4)+"/"+startdates[s].toString().substring(4,6)+"/"+startdates[s].toString().substring(6,8));
-	 		alert(enddates[s]);
 	 		enddates[s]= new Date(enddates[s].toString().substring(0, 4)+"/"+enddates[s].toString().substring(4,6)+"/"+enddates[s].toString().substring(6,8));
 	 	}
 	 	
@@ -185,10 +135,10 @@
 		}
 		tomorrow.setDate(tomorrow.getDate() + 1)
 		
-		document.getElementById("details").innerHTML=tomorrow +"<br>"+"Next Hurricane is "+hurricanenames[j]+"("+identity[j]+")"+"<br>"+"and will start forming on :"+startdates[j];	
+		//document.getElementById("details").innerHTML=tomorrow +"<br>"+"Next Hurricane is "+identity[j]+"<br>"+"and will start forming on :"+startdates[j];	
 		
 		
-		//alert(pointsPlotted+" "+pointsPlotted[j-1]);
+		//alert(pointsAdded+" "+pointsAdded[j-1]);
 
 		 if ( tomorrow < enddates[enddates.length-1] && season==true ) window.setTimeout(function(){start_Timer();},step);
 		 /*if(timer == identity.length)
@@ -208,14 +158,14 @@ function resume_plotting()  // Reload State variables once resumed
 	if(playbySeason)markerLayer[j-1].clearLayers();
 	else markerLayer[j].clearLayers();
 	var resume_state = localStorage.getItem("current_state");
-	pointsPlotted = JSON.parse(resume_state);
-	console.log(pointsPlotted);
+	pointsAdded = JSON.parse(resume_state);
+	console.log(pointsAdded);
 	if(playbySeason==true)
 	{
 		season=true;
 		for(x=0;x<j;x++)
 		{
-			if(pointsPlotted[x]<limit[x])
+			if(pointsAdded[x]<limit[x])
 				get_Data(identity[x],x);
 
 		}
@@ -231,11 +181,11 @@ function resume_plotting()  // Reload State variables once resumed
 function pause_plotting() //Pause Plotting when pause is pressed
 {	
 	
-	console.log("Points Added = "+pointsPlotted[0]+" limit ="+limit[0]);
+	console.log("Points Added = "+pointsAdded[0]+" limit ="+limit[0]);
 	season=false;
 	flag=false;
-	for(k=0;k<pointsPlotted.length;k++)
-	var hurricane_state = pointsPlotted;
+	for(k=0;k<pointsAdded.length;k++)
+	var hurricane_state = pointsAdded;
 	localStorage.setItem("current_state", JSON.stringify(hurricane_state));
 	var resume_state = localStorage.getItem("current_state");
 	//console.log(resume_state);
@@ -245,17 +195,14 @@ function pause_plotting() //Pause Plotting when pause is pressed
 
  function plot_all_hurricanes() //Plot hurricanes that do not have a particular chronological order
 {
-	
-	
 	flag=false;
 	playbySeason=false;
-
 	document.getElementById("progressBar").setAttribute("max",(identity.length-1)) ;
 		 document.getElementById("progressBar").setAttribute("value",(j) );
 	
-			document.getElementById("details").innerHTML="<br>"+"Current Hurricane is "+ hurricanenames[j]+" ("+identity[j]+")"+"<br>"+"and started forming on :"+startdates[j];
+			//document.getElementById("details").innerHTML="<br>"+"Current Hurricane is "+identity[j]+"<br>"+"and started forming on :"+startdates[j];
 				
-			
+			console.log(j);
 			get_Data(identity[j],j);
 			
 	
@@ -294,7 +241,6 @@ function decrease_speed()
 function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 	{
 
-		
 		 var latvalues=[];
       var lngvalues=[];
       var hwind=[];
@@ -305,7 +251,6 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 	  var polyline = L.polyline([]);
 	  if(markerLayer[hurr_no]==null)
 	  {
-	  	
 	   markerLayer[hurr_no]=L.layerGroup([]);	
 	  polyLayer[hurr_no]=L.layerGroup([]);
 	   quadrophonicLayer[hurr_no]=L.layerGroup([]);
@@ -326,7 +271,7 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 		  xmlhttp = new XMLHttpRequest();
 		}
 		
-		var query = "/php/getPlotData.php?query="+hurr_id;
+		var query = "../php/getPlotData.php?query="+hurr_id;
 		xmlhttp.open("GET", query, false);
 		xmlhttp.onreadystatechange=function() 
 		{
@@ -341,16 +286,13 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 					
 
 				var polyline = L.polyline([]).addTo(polyLayer[hurr_no]);
-				//var pointsPlotted = [];
+				//var pointsAdded = [];
 				
 				var latvalues = [];
 				var lngvalues = [];
-				
-				if(pointsPlotted[hurr_no]==null)	
-					pointsPlotted[hurr_no]=0;
+				if(pointsAdded[hurr_no]==null)	pointsAdded[hurr_no]=0;
 				limit[hurr_no]=var_ret.length-1;
 				console.log("limit "+limit[hurr_no]);
-				console.log(pointsPlotted[hurr_no]);
 				
 				for(i=0;i<var_ret.length;i++)
 				{
@@ -369,8 +311,8 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 
 				}
 				
-				if(pointsPlotted[hurr_no]==limit[hurr_no])
-					pointsPlotted[hurr_no]--;		
+				if(pointsAdded[hurr_no]==limit[hurr_no])
+					pointsAdded[hurr_no]--;		
 				draw_hurricanes();  // Draw each hurricane
 				
 	
@@ -378,46 +320,44 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 			function draw_hurricanes() 
 			{
 
-				
 				 var colorline='blue';
 				// Below code draws polyline along the path of the hurricane
-				if(lngvalues[pointsPlotted[hurr_no]]<0)
 			   polyline.addLatLng(
-			   L.latLng(latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]));
-			   if(hwind[pointsPlotted[hurr_no]]>40 && playbySeason==true)
+			   L.latLng(latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]));
+			   if(hwind[pointsAdded[hurr_no]]>40 && playbySeason==true)
 			   	  colorline= 'red';
 			   	else
 			   	 colorline= 'blue';
 			   polyline.setStyle(
 			   	{
                 color: colorline,
-                weight: 6,
+                weight: 2,
                 opacity: .7,
                 dashArray: '15,5',
                 lineJoin: 'round'
             });
-			  /* L.circle([latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted]],(hwind[pointsPlotted[hurr_no]]-100)*5000,{
+			  /* L.circle([latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded]],(hwind[pointsAdded[hurr_no]]-100)*5000,{
 			    color: 'red',
 			    fillColor: '#f03',
 			    fillOpacity: 0.2,
 			    stroke: false
 			}).addTo(map);*/
-      			if(h34[pointsPlotted[hurr_no]]!=(-999) || h50[pointsPlotted[hurr_no]]!=(-999) || h64[pointsPlotted[hurr_no]]!=(-999))
+      			if(h34[pointsAdded[hurr_no]]!=(-999) || h50[pointsAdded[hurr_no]]!=(-999) || h64[pointsAdded[hurr_no]]!=(-999))
       			{
       				
-				      L.circle([latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]],h34[pointsPlotted[hurr_no]],{
+				      L.circle([latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]],h34[pointsAdded[hurr_no]],{
 							    color: 'Green',
 							    fillColor: '#009900', //Red
 							    fillOpacity: 0.2,
 							    stroke: false
 							}).addTo(quadrophonicLayer[hurr_no]);
-				      L.circle([latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]],h50[pointsPlotted[hurr_no]],{
+				      L.circle([latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]],h50[pointsAdded[hurr_no]],{
 							    color: 'Amber',
 							    fillColor: '#FFBF00', //Amber
 							    fillOpacity: 0.2,
 							    stroke: false
 							}).addTo(quadrophonicLayer[hurr_no]);
-				      L.circle([latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]],h64[pointsPlotted[hurr_no]],{
+				      L.circle([latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]],h64[pointsAdded[hurr_no]],{
 							    color: 'Red',
 							    fillColor: '#C0392B', //Red
 							    fillOpacity: 0.2,
@@ -426,7 +366,7 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 		 	 	}
 
 			
-			  if(identity.length==1) map.setView([latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]]);
+			  if(identity.length==1) map.setView([latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]]);
 			  window.setInterval(function() {
 			  	
 					marker.bindPopup(hurr_id);
@@ -435,19 +375,19 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
        			 });
        			 
         			
-       			marker.setLatLng(L.latLng(latvalues[pointsPlotted[hurr_no]],lngvalues[pointsPlotted[hurr_no]]));},speed);
+       			marker.setLatLng(L.latLng(latvalues[pointsAdded[hurr_no]],lngvalues[pointsAdded[hurr_no]]));},speed);
 			  	
 					
 					
        			marker.addTo(markerLayer[hurr_no]);
        			
 
-			   if (++pointsPlotted[hurr_no] < limit[hurr_no] && flag==true) window.setTimeout(function(){draw_hurricanes();},speed);
+			   if (++pointsAdded[hurr_no] < limit[hurr_no] && flag==true) window.setTimeout(function(){draw_hurricanes();},speed);
 			   if(flag==false)
 			   {
 			   		
 			   }
-			   if(pointsPlotted[hurr_no] == limit[hurr_no] )
+			   if(pointsAdded[hurr_no] == limit[hurr_no] )
 			  {
 			  	if(!playbySeason)
 			  	{
@@ -481,3 +421,15 @@ function get_Data(hurr_id,hurr_no)   // Fetch data for each individual hurricane
 }
 
 // Integration code
+$(".play").click(function(){
+	if(first_time=="true"){
+		start_Timer();
+	}
+	else{
+		resume_plotting();
+	}
+	first_time = "false";
+});
+$(".pause").click(function(){
+	pause_plotting();
+});

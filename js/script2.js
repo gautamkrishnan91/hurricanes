@@ -15,7 +15,10 @@ function get_Id(identity)
   {
       map.removeLayer(layer);
   });
-
+  windLayer.clearLayers();
+  pressureLayer.clearLayers();
+  circleLayer.clearLayers();
+  typeLayer.clearLayers();
   pressureLayer.eachLayer(function(layer)
   {
       map.removeLayer(layer);
@@ -25,6 +28,15 @@ function get_Id(identity)
   {
       map.removeLayer(layer);
   });
+  for(k=0;k<polyLayer.length;k++)
+  {
+    polyLayer[k].clearLayers();
+    markerLayer[k].clearLayers();
+    quadrophonicLayer[k].clearLayers();
+  }
+  
+    heatLayer.clearLayers();
+  
   
   for(i=0;i<identity.length;i++)
   {
@@ -58,7 +70,7 @@ function getData(id)
     {
       xmlhttp = new XMLHttpRequest();
     }
-                  var querydata = "../php/getDataStatic.php?query="+id;
+                  var querydata = "/php/getDataStatic.php?query="+id;
                 xmlhttp.open("GET", querydata, false);
                 xmlhttp.onreadystatechange=function() 
                 {
@@ -75,7 +87,8 @@ function getData(id)
                                 var h34 = [];
                                 var h50 = [];
                                 var h64 = [];
-                                
+                                var hname = var_ret[0][1];
+
                                 for(j=0;j<var_ret.length;j++)
                                         {       latvalues.push(+var_ret[j][6]);
                                                 //console.log(("latvalues"+var_ret[j][6]));
@@ -86,7 +99,7 @@ function getData(id)
                                                 h50.push((((+var_ret[j][14])+(+var_ret[j][15])+(+var_ret[j][16])+(+var_ret[j][17]))/4)*1852);
                                                 h64.push((((+var_ret[j][18])+(+var_ret[j][19])+(+var_ret[j][20])+(+var_ret[j][21]))/4)*1852);     
                                                 hstatus.push(var_ret[j][5]);                            
-                                                //alert(h34+h50+h64);
+                                                
                                               if (latvalues.length == 2)
                                               {
                                                 //alert("gonna draw");
@@ -242,6 +255,9 @@ function getData(id)
                                        var  markertypes=L.marker([0,0],{icon:cssIcon});
 
                                        markertypes.setLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded])).addTo(typeLayer);
+                                        markertypes.on('mouseover', function (e) {
+                                          document.getElementById("details").innerHTML="<br>"+"Selected Hurricane is "+hname+"  Windspeed : "+windspeed[pointsAdded]+"<br>Pressure(in millibars) :" + pressure[pointsAdded] + "  Status :"+ hstatus[pointsAdded]});
+                                         
 
 
 
@@ -266,6 +282,8 @@ function getData(id)
                                                                 stroke: false
                                                             }).addTo(circleLayer);
                                                   }
+                                                   
+                                         
                                     
                                                   //For pressure layer
                                     if ( (pressure[pointsAdded] == 9999))
@@ -309,10 +327,12 @@ function getData(id)
                                           polyline1.setStyle({color : cord_color[ind],opacity : 1,weight : 5, smoothFactor : 100});
                                           polyline1.addLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
                                           polyline1.on('mouseover', function (e) {
-                                                                               console.log(id+latvalues[pointsAdded]+lngvalues[pointsAdded]+" "+windspeed[pointsAdded]);});
+                                          document.getElementById("details").innerHTML="<br>"+"Selected Hurricane is "+hname+"  Windspeed : "+windspeed[pointsAdded]+"<br>Pressure(in millibars) :" + pressure[pointsAdded] + "  Status :"+ hstatus[pointsAdded]});
                                           //Polylines for pressure based.
                                           //polyline2.setStyle({color : cord_color1[hstatus_ind],opacity : 1,weight : 5, smoothFactor : 100});
                                           polyline2.addLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
+                                          polyline2.on('mouseover', function (e) {
+                                          document.getElementById("details").innerHTML="<br>"+"Selected Hurricane is "+hname+"  Windspeed : "+windspeed[pointsAdded]+"<br>Pressure(in millibars) :" + pressure[pointsAdded] + "  Status :"+ hstatus[pointsAdded]});
                                           
                                           polyline1.addTo(windLayer);
                                           polyline2.addTo(pressureLayer);
@@ -325,10 +345,12 @@ function getData(id)
                                           polyline1.setStyle({color : cord_color[ind],opacity : 1,weight : 5, smoothFactor : 100});
                                           polyline1.addLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
                                           polyline1.on('mouseover', function (e) {
-                                                                               console.log(id+latvalues[pointsAdded]+lngvalues[pointsAdded]+" "+windspeed[pointsAdded]);});
+                                          document.getElementById("details").innerHTML="<br>"+"Selected Hurricane is "+hname+"  Windspeed : "+windspeed[pointsAdded]+"<br>Pressure(in millibars) :" + pressure[pointsAdded] + "  Status :"+ hstatus[pointsAdded]});
                                           //Polylines for pressure based.
                                           //polyline2.setStyle({color : cord_color1[hstatus_ind],opacity : 1,weight : 5, smoothFactor : 100});
                                           polyline2.addLatLng(L.latLng(latvalues[pointsAdded],lngvalues[pointsAdded]));
+                                          polyline2.on('mouseover', function (e) {
+                                          document.getElementById("details").innerHTML="<br>"+"Selected Hurricane is "+hname+"  Windspeed : "+windspeed[pointsAdded]+"<br>Pressure(in millibars) :" + pressure[pointsAdded] + "  Status :"+ hstatus[pointsAdded]});
                                           
                                           polyline1.addTo(windLayer);
                                           polyline2.addTo(pressureLayer); 

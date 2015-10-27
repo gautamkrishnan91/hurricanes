@@ -100,7 +100,7 @@ if ($showparticular == "top5")//if top 5 is selected.
     $result = mysql_query($query);
     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) 
     {
-    array_push($returnid,array($row['hid'],$row['hname'],$row['startdate']));
+    array_push($returnid,array($row['hid'],$row['hname'],$row['startdate'],$row['maxwind']));
     }
     echo json_encode($returnid);
 }                          
@@ -110,7 +110,7 @@ else if ($showparticular == "top10")//if top 10 is selected.
     $result = mysql_query($query);
     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) 
     {
-    array_push($returnid,array($row['hid'],$row['hname'],$row['startdate']));
+    array_push($returnid,array($row['hid'],$row['hname'],$row['startdate'],$row['maxwind']));
     }
     echo json_encode($returnid);
 }
@@ -256,7 +256,7 @@ else
                                                 $result = mysql_query($query);
                                                 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) 
                                                 {
-                                                array_push($returnid,array($row['hid'],$row['hname'],$row['startdate']));
+                                                array_push($returnid,array($row['hid'],$row['hname'],$row['startdate'],$row['maxwind']));
                                                 }
                                                 echo json_encode($returnid);
                                     }
@@ -276,7 +276,7 @@ else
                                                 $result = mysql_query($query);
                                                 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) 
                                                 {
-                                                array_push($returnid,array($row['hid'],$row['hname'],$row['startdate']));
+                                                array_push($returnid,array($row['hid'],$row['hname'],$row['startdate'],$row['maxwind']));
                                                 }
                                                 echo json_encode($returnid);
                                 }

@@ -39,7 +39,7 @@
 		position: relative;
 	}
 }
-#graph-1, #graph-1-1, #graph-2, #graph-2-1{
+#graph-1, #graph-1-1, #graph-2, #graph-2-1, #graph-3, #graph-3-1, #graph-4, #graph-4-1{
 	margin-top: 30px;
 	position: relative;
 
@@ -92,6 +92,24 @@
 				background-color: #4bbffe;
 			}
 		}
+		.text-right{
+			position: relative;
+			.right;
+		}
+		.color-graph-3{
+			position: relative;
+			.right;
+			&:after{
+				content: "";
+				position: absolute;
+				left: -26px;
+			    width: 15px;
+			    height: 15px;
+			    top: 3px;
+				border-radius: 50%;
+				background-color: #2ac0c1;
+			}
+		}
 	}
 }
 .graphs-container{
@@ -100,18 +118,8 @@
 	margin-left: -1984px;
 	transition: all 0.2s;
 
-	#graph-1{
-		.right;
-	}
-	#graph-1-1{
-		.left;
-	}
-	#graph-2{
-		.right;
-	}
-	#graph-2-1{
-		.left;
-	}
+	#graph-1, #graph-2, #graph-3, #graph-4{ .right; }
+	#graph-1-1, #graph-2-1, #graph-3-1, #graph-4-1{ .left; }
 }
 .axis path,
 .axis line {
@@ -127,13 +135,13 @@
 .x.axis, .y.axis{
 	fill: #FFF;
 }
-.line1 {
+.line1, .lined2, .lined1 {
   fill: none;
   stroke: #2ac0c1;
   stroke-width: 2.5px;
   filter: drop-shadow( 5px 5px 5px #000 );
 }
-.line2 {
+.line2, .lined3, .lined4 {
   fill: none;
   stroke: #F6C86A;
   stroke-width: 2.5px;
